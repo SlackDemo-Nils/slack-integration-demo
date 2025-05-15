@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SlackDemo-Nils/slack-integration-demo/issues"
   },
-  "homepage": "https://github.com/SlackDemo-Nils/slack-integration-demo#readme"
+  "homepage": "https://github.com/SlackDemo-Nils/slack-integration-demo#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0"
+  }
 }
