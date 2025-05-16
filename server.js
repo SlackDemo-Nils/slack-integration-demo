@@ -23,15 +23,35 @@ app.get('/', (req, res) => {
     res.send('Hello from the Feedback Server! The server is alive.');
 });
 
-app.post('/api/submit-feedback', (req, res) => {
-    const formData = req.body; // Thanks to app.use(express.json())!
-    console.log('Received feedback data on backend:', formData);
-    // For now, just acknowledge receipt
-    // In a real app, you'd do validation here
-    if (formData && formData.userName && formData.userMessage) {
-        res.status(200).json({ success: true, message: 'Feedback data received by server.' });
-    } else {
-        res.status(400).json({ success: false, message: 'Missing required form data.' });
+app.post('/api/submit-feedback', async (req, res) => {
+    const formData = req.body;
+    console.log('Received feedback for Slack:', formData);
+    if (!formData || !formData.userName || !formData.userMessage) {
+        return res.status(400).json({ success: false, message: 'Missing required form data for Slack.' });
+    }
+    // Construct a dynamic message for Slack using the form data
+    const slackMessageText = `🚀 New Feedback Submitted! 🚀\n
+    👤 Name: ${formData.userName}\n
+    📧 Email: ${formData.userEmail || 'Not provided'}\n
+    💬 Message: ${formData.userMessage}`;
+    try {
+        console.log(`Attempting to send to Slack channel: ${slackChannelId}`);
+        const result = await slackClient.chat.postMessage({
+            channel: slackChannelId,
+            text: slackMessageText
+            // You could add Block Kit here for richer messages later!
+        });
+        if (result.ok) {
+            console.log('Message successfully sent to Slack. Timestamp:', result.ts);
+            res.status(200).json({ success: true, message: 'Feedback received and sent to Slack!' });
+        } else {
+            console.error('Slack API returned an error:', result.error);
+            // Don't send detailed Slack errors to the client for security
+            res.status(500).json({ success: false, message: 'Server received data, but failed to send to Slack.' });
+        }
+    } catch (error) {
+        console.error('Error sending message via Slack SDK:', error);
+        res.status(500).json({ success: false, message: 'Internal server error while trying to contact Slack.' });
     }
 });
 

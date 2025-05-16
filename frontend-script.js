@@ -7,7 +7,7 @@
                 const formData = {
                     userName: document.getElementById('userName').value,
                     password: document.getElementById('userPassword').value,
-                    email: document.getElementById('userEmail').value,
+                    userEmail: document.getElementById('userEmail').value,
                     userMessage: document.getElementById('userMessage').value
                 };
                 console.log('Form data:', formData);
