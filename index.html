@@ -12,7 +12,7 @@
     <form id="feedbackForm" class="list-inline">
         <!-- Name Input -->
         <div class="form-group">
-            <label for="userName">Name:</label>
+            <label for="userName">Name *:</label>
             <input 
                 type="text" 
                 id="userName" 
@@ -23,7 +23,7 @@
         </div>
                 <!-- Password Input -->
         <div class="form-group">
-            <label for="userPassword">Password:</label>
+            <label for="userPassword">Password *:</label>
             <input 
                 type="password" 
                 id="userPassword" 
@@ -45,7 +45,7 @@
         </div>
         <!-- Message Input -->
         <div class="form-group">
-            <label for="userMessage">Message:</label>
+            <label for="userMessage">Message *:</label>
             <textarea 
                 id="userMessage" 
                 name="userMessage" 
@@ -58,26 +58,6 @@
         <!-- Submit Button -->
         <button type="button" id="submitBtn">Submit Feedback</button>
     </form>
-    <script>
-        // Basic JavaScript to handle form submission
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            const form = document.getElementById('feedbackForm');
-            
-            if (form.checkValidity()) {
-                // Collect form data
-                const formData = {
-                    name: document.getElementById('userName').value,
-                    password: document.getElementById('userPassword').value,
-                    email: document.getElementById('userEmail').value,
-                    message: document.getElementById('userMessage').value
-                };
-                console.log('Form data:', formData);
-                
-                // Clear form after submission
-                form.reset();
-                alert('Thank you for your feedback!');
-            }
-        });
-    </script>
+    <script src="frontend-script.js"></script>
 </body>
 </html>
