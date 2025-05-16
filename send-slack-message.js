@@ -18,10 +18,11 @@ async function sendMessageToSlack() {
     try {
         console.log(`Sending message to channel ${slackChannelId}...`);
         // Call the chat.postMessage method using the WebClient
-        const result = await web.chat.postMessage({
+        const messageData = {
             channel: slackChannelId,
-            text: "Hello from my Node.js app! This message was sent at " + new Date().toLocaleString()
-        });
+            text: "Hello from my Node.js app! This message was sent at " + new Date().toLocaleString(),
+        };
+        const result = await web.chat.postMessage(messageData);
         if (result.ok) {
             console.log("Message sent successfully to Slack! Timestamp:", result.ts);
         } else {
